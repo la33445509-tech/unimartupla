@@ -1,0 +1,25 @@
+{
+  "name": "UniMart Investment App",
+  "short_name": "UniMart",
+  "description": "UniMart Investment Platform - Invest and earn daily",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F7F9F8",
+  "theme_color": "#16A34A",
+  "orientation": "portrait",
+  "scope": "./",
+  "icons": [
+    {
+      "src": "https://i.ibb.co/sdqfvtRz/file-169.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://i.ibb.co/sdqfvtRz/file-169.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
