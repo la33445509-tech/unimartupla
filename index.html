@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>UniMart - Investment Platform</title>
+    <!-- PWABuilder Manifest Links -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#16A34A">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--primary:#16A34A;--primary-dark:#15803D;--bg:#F7F9F8;--card:#FFF;--text:#1F2937;--text-muted:#6B7280;--border:#E5E7EB;--danger:#EF4444;--warning:#F59E0B;--info:#0EA5E9;--shadow:0 4px 6px -1px rgba(0,0,0,.1);--shadow-lg:0 10px 15px -3px rgba(0,0,0,.1);--radius:12px;--radius-lg:16px;--transition:all .3s ease}
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri',sans-serif;-webkit-tap-highlight-color:transparent}
+        body{background:var(--bg);color:var(--text);overflow-x:hidden;padding-bottom:80px}
+        .hidden{display:none!important}.flex{display:flex}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}.text-center{text-align:center}.text-primary{color:var(--primary)}.text-muted{color:var(--text-muted)}.font-bold{font-weight:700}.w-full{width:100%}.gap-2{gap:8px}.gap-4{gap:16px}.grid{display:grid}.grid-cols-2{grid-template-columns:repeat(2,1fr)}.grid-cols-3{grid-template-columns:repeat(3,1fr)}.grid-cols-4{grid-template-columns:repeat(4,1fr)}.mt-2{margin-top:8px}.mt-4{margin-top:16px}.mb-2{margin-bottom:8px}.mb-4{margin-bottom:16px}.p-4{padding:16px}
+        .card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:16px}
+        .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 24px;border-radius:var(--radius);font-weight:600;font-size:16px;border:none;cursor:pointer;transition:var(--transition);width:100%}
+        .btn-primary{background:var(--primary);color:#fff}.btn-primary:active{background:var(--primary-dark);transform:scale(.98)}.btn-outline{background:transparent;border:1px solid var(--primary);color:var(--primary)}.btn-danger{background:var(--danger);color:#fff}
+        .input-group{margin-bottom:16px}.input-group label{display:block;font-size:14px;font-weight:500;margin-bottom:6px;color:var(--text)}
+        .input-wrapper{display:flex;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:var(--transition)}
+        .input-wrapper:focus-within{border-color:var(--primary);box-shadow:0 0 0 2px rgba(22,163,74,.1)}
+        .input-prefix{padding:12px 16px;background:var(--bg);color:var(--text-muted);font-weight:600;border-right:1px solid var(--border)}
+        .input-wrapper input,.input-wrapper select{flex:1;padding:12px 16px;border:none;outline:none;background:transparent;font-size:16px;color:var(--text);width:100%}
+        .badge{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600}.badge-success{background:#DCFCE7;color:#166534}.badge-warning{background:#FEF3C7;color:#92400E}.badge-danger{background:#FEE2E2;color:#991B1B}.badge-info{background:#DBEAFE;color:#1E40AF}
+        .app-header{background:var(--card);padding:16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border)}
+        .app-header .brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:18px;color:var(--primary)}
+        .app-header .brand img{width:32px;height:32px;border-radius:8px;object-fit:cover}
+        .header-actions{display:flex;gap:12px;align-items:center}.header-actions i{font-size:20px;color:var(--text-muted);cursor:pointer}
+        .bottom-nav{position:fixed;bottom:0;left:0;width:100%;background:var(--card);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:8px 0;z-index:1000;box-shadow:0 -4px 6px -1px rgba(0,0,0,.05)}
+        .nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--text-muted);text-decoration:none;font-size:12px;padding:4px 12px;border-radius:var(--radius);transition:var(--transition);cursor:pointer}
+        .nav-item i{font-size:20px}.nav-item.active{color:var(--primary);font-weight:600}
+        .page{display:none;padding:16px;animation:fadeIn .3s ease}.page.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .auth-container{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:24px;background:var(--bg)}
+        .auth-header{text-align:center;margin-bottom:32px}.auth-header img{width:80px;height:80px;border-radius:20px;margin-bottom:16px;object-fit:cover}
+        .auth-header h1{font-size:24px;color:var(--primary);margin-bottom:8px}.auth-header p{color:var(--text-muted);font-size:14px}
+        .auth-tabs{display:flex;gap:24px;margin-bottom:24px;border-bottom:2px solid var(--border);padding-bottom:8px}
+        .auth-tab{font-size:16px;font-weight:600;color:var(--text-muted);cursor:pointer;padding-bottom:8px;position:relative;transition:var(--transition)}
+        .auth-tab.active{color:var(--primary)}.auth-tab.active::after{content:'';position:absolute;bottom:-10px;left:0;width:100%;height:3px;background:var(--primary);border-radius:3px}
+        .banner-carousel{position:relative;border-radius:var(--radius-lg);overflow:hidden;margin-bottom:16px;height:160px;background:var(--border)}
+        .banner-slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transition:opacity .5s ease;background-size:cover;background-position:center}
+        .banner-slide.active{opacity:1}
+        .banner-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+        .banner-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:var(--transition)}
+        .banner-dot.active{background:#fff;width:20px;border-radius:4px}
+        .countdown-box{display:flex;justify-content:space-between;background:var(--card);padding:12px;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:16px}
+        .countdown-item{text-align:center;flex:1}.countdown-item .number{font-size:20px;font-weight:700;color:var(--primary);display:block}.countdown-item .label{font-size:12px;color:var(--text-muted)}
+        .quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+        .quick-action-item{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
+        .quick-action-icon{width:48px;height:48px;border-radius:50%;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--primary);transition:var(--transition);box-shadow:var(--shadow)}
+        .quick-action-item:active .quick-action-icon{transform:scale(.9);background:var(--primary);color:#fff}
+        .quick-action-item span{font-size:11px;color:var(--text-muted);text-align:center}
+        .series-tabs{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px}
+        .series-tab{padding:8px 16px;border-radius:20px;background:var(--card);border:1px solid var(--border);font-size:14px;font-weight:500;white-space:nowrap;cursor:pointer;transition:var(--transition)}
+        .series-tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+        .plan-card{background:var(--card);border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:16px}
+        .plan-image{width:100%;height:140px;background:#e5e7eb;overflow:hidden}.plan-image img{width:100%;height:100%;object-fit:cover}
+        .plan-info{padding:16px;position:relative}
+        .plan-details{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;margin-bottom:16px}
+        .plan-detail-item{display:flex;align-items:center;gap:8px;font-size:14px}.plan-detail-item i{color:var(--primary);width:20px;text-align:center}.plan-detail-item .val{font-weight:600}
+        .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;padding:16px}
+        .modal-overlay.active{display:flex}
+        .modal-content{background:var(--card);border-radius:var(--radius-lg);width:100%;max-width:400px;max-height:90vh;overflow-y:auto;animation:slideUp .3s ease;position:relative}
+        @keyframes slideUp{from{transform:translateY(50px);opacity:0}to{transform:translateY(0);opacity:1}}
+        .modal-header{padding:20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--primary);color:#fff;border-radius:var(--radius-lg) var(--radius-lg) 0 0}
+        .modal-header h3{font-size:18px}.modal-close{background:rgba(255,255,255,.2);border:none;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px}
+        .modal-body{padding:20px}.modal-footer{padding:16px 20px;border-top:1px solid var(--border)}
+        .wallet-balance-card{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);border-radius:var(--radius-lg);padding:20px;color:#fff;margin-bottom:16px;box-shadow:var(--shadow-lg)}
+        .wallet-balance-card .label{font-size:14px;opacity:.9}.wallet-balance-card .amount{font-size:32px;font-weight:700;margin:8px 0}
+        .wallet-actions{display:flex;gap:12px;margin-top:16px}
+        .wallet-action-btn{flex:1;background:rgba(255,255,255,.2);border:none;color:#fff;padding:10px;border-radius:var(--radius);font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;backdrop-filter:blur(4px)}
+        .income-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+        .income-card{background:var(--card);border-radius:var(--radius);padding:12px;text-align:center;border:1px solid var(--border)}
+        .income-card .label{font-size:11px;color:var(--text-muted)}.income-card .amount{font-size:16px;font-weight:700;color:var(--primary);margin-top:4px}
+        .menu-list{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden}
+        .menu-item{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--border);cursor:pointer;transition:var(--transition)}
+        .menu-item:last-child{border-bottom:none}.menu-item:active{background:var(--bg)}
+        .menu-item .left{display:flex;align-items:center;gap:12px;font-size:15px}.menu-item .left i{width:24px;color:var(--primary);font-size:18px}.menu-item .right{color:var(--text-muted);font-size:14px}
+        .referral-box{background:var(--card);border:1px dashed var(--primary);border-radius:var(--radius);padding:16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+        .referral-box .code{font-size:20px;font-weight:700;color:var(--primary);letter-spacing:1px}
+        .team-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+        .team-stat-card{background:var(--card);padding:16px;border-radius:var(--radius);border:1px solid var(--border);text-align:center}
+        .team-stat-card .number{font-size:24px;font-weight:700;color:var(--primary)}.team-stat-card .label{font-size:13px;color:var(--text-muted)}
+        .toast-container{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:3000;width:90%;max-width:400px;display:flex;flex-direction:column;gap:8px}
+        .toast{padding:12px 16px;border-radius:var(--radius);color:#fff;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-lg);animation:slideDown .3s ease;font-size:14px}
+        @keyframes slideDown{from{transform:translateY(-20px);opacity:0}to{transform:translateY(0);opacity:1}}
+        .toast-success{background:#16A34A}.toast-error{background:#EF4444}.toast-warning{background:#F59E0B}.toast-info{background:#0EA5E9}
+        .empty-state{text-align:center;padding:40px 20px;color:var(--text-muted)}.empty-state i{font-size:48px;margin-bottom:16px;color:var(--border)}
+        .payment-method-option{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;cursor:pointer;transition:var(--transition)}
+        .payment-method-option.active{border-color:var(--primary);background:rgba(22,163,74,.05)}
+        .payment-method-option img{width:40px;height:40px;object-fit:contain;border-radius:8px}
+        .payment-method-option .details{flex:1}.payment-method-option .name{font-weight:600;font-size:15px}.payment-method-option .number{font-size:13px;color:var(--text-muted)}
+        .deposit-number-card{background:var(--bg);text-align:center;padding:16px;border-radius:var(--radius);margin-bottom:16px;border:1px dashed var(--primary)}
+        .deposit-number-card .number{font-size:22px;font-weight:700;color:var(--primary);letter-spacing:1px}
+        .deposit-number-card .note{font-size:12px;color:var(--danger);font-weight:500;margin-top:4px}
+        .loading-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,.9);z-index:5000;display:none;align-items:center;justify-content:center}
+        .loading-overlay.active{display:flex}
+        .spinner{width:40px;height:40px;border:4px solid var(--border);border-top:4px solid var(--primary);border-radius:50%;animation:spin 1s linear infinite}
+        @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+        @media(min-width:430px){.page{max-width:430px;margin:0 auto}.bottom-nav{max-width:430px;left:50%;transform:translateX(-50%)}.app-header{max-width:430px;margin:0 auto}}
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div></div>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- AUTH SCREEN -->
+    <div id="authScreen" class="auth-container">
+        <div class="auth-header">
+            <img src="https://placehold.co/80x80/16A34A/FFFFFF?text=UM" alt="Logo">
+            <h1 id="authBrandName">UniMart</h1>
+            <p id="authTagline">আপনার বিশ্বস্ত ইনভেস্টমেন্ট প্ল্যাটফর্ম</p>
+        </div>
+        <div class="auth-tabs">
+            <div class="auth-tab active" onclick="switchAuthTab('login')" id="tabLogin">সাইন ইন</div>
+            <div class="auth-tab" onclick="switchAuthTab('register')" id="tabRegister">সাইন আপ</div>
+        </div>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="input-group">
+                <label id="labelLoginPhone">ফোন নম্বর</label>
+                <div class="input-wrapper">
+                    <span class="input-prefix">+880</span>
+                    <input type="tel" id="loginPhone" placeholder="আপনার মোবাইল নম্বর লিখুন" required>
+                </div>
+            </div>
+            <div class="input-group">
+                <label id="labelLoginPass">পাসওয়ার্ড</label>
+                <div class="input-wrapper">
+                    <input type="password" id="loginPassword" placeholder="আপনার পাসওয়ার্ড লিখুন" required>
+                    <i class="fas fa-eye" style="padding:12px;color:var(--text-muted);cursor:pointer" onclick="togglePassword('loginPassword',this)"></i>
+                </div>
+            </div>
+            <div class="text-right mb-4"><span class="text-primary" style="font-size:14px;cursor:pointer" onclick="showToast(t('forgotPass'),'info')" id="forgotPassLink">পাসওয়ার্ড ভুলে গেছেন?</span></div>
+            <button type="submit" class="btn btn-primary" id="btnLogin">সাইন ইন</button>
+        </form>
+        <form id="registerForm" class="hidden" onsubmit="handleRegister(event)">
+            <div class="input-group">
+                <label id="labelRegPhone">ফোন নম্বর</label>
+                <div class="input-wrapper"><span class="input-prefix">+880</span><input type="tel" id="regPhone" placeholder="আপনার মোবাইল নম্বর দিন" required></div>
+            </div>
+            <div class="input-group">
+                <label id="labelRegOtp">ভেরিফিকেশন কোড</label>
+                <div class="input-wrapper">
+                    <input type="text" id="regOtp" placeholder="ভেরিফিকেশন কোড" readonly>
+                    <button type="button" class="btn btn-primary" style="width:auto;padding:8px 16px;border-radius:0;font-size:14px" onclick="sendOtp()" id="otpBtn">কোড পাঠান</button>
+                </div>
+            </div>
+            <div class="input-group"><label id="labelRegPass">পাসওয়ার্ড</label><div class="input-wrapper"><input type="password" id="regPassword" placeholder="পাসওয়ার্ড দিন" required></div></div>
+            <div class="input-group"><label id="labelRegConfirm">পাসওয়ার্ড নিশ্চিত করুন</label><div class="input-wrapper"><input type="password" id="regConfirmPassword" placeholder="আবার পাসওয়ার্ড দিন" required></div></div>
+            <div class="input-group"><label id="labelRegInvite">ইনভাইট কোড (ঐচ্ছিক)</label><div class="input-wrapper"><input type="text" id="regInviteCode" placeholder="ইনভাইট কোড দিন"></div></div>
+            <button type="submit" class="btn btn-primary" id="btnRegister">সাইন আপ</button>
+        </form>
+    </div>
+
+    <!-- WELCOME MODAL -->
+    <div class="modal-overlay" id="welcomeModal">
+        <div class="modal-content">
+            <div class="modal-header"><h3 id="welcomeTitle">🎉 স্বাগতম!</h3><button class="modal-close" onclick="closeModal('welcomeModal')">&times;</button></div>
+            <div class="modal-body text-center">
+                <i class="fas fa-hand-peace" style="font-size:48px;color:var(--primary);margin-bottom:16px"></i>
+                <h3 style="margin-bottom:8px" id="welcomeHeading">আমাদের প্ল্যাটফর্মে আপনাকে স্বাগতম!</h3>
+                <p class="text-muted" style="margin-bottom:20px;font-size:14px" id="welcomeMsg">আমরা আপনার বিশ্বস্ত ইনভেস্টমেন্ট পার্টনার।</p>
+                <div style="display:flex;gap:12px;justify-content:center">
+                    <a href="#" target="_blank" class="btn btn-primary" style="width:auto;padding:10px 20px;font-size:14px;text-decoration:none" id="welcomeSupportLink"><i class="fab fa-telegram"></i> সাপোর্ট</a>
+                    <a href="#" target="_blank" class="btn btn-outline" style="width:auto;padding:10px 20px;font-size:14px;text-decoration:none" id="welcomeChannelLink"><i class="fab fa-telegram"></i> চ্যানেল</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="mainApp" class="hidden">
+        <header class="app-header">
+            <div class="brand"><img src="https://placehold.co/32x32/16A34A/FFFFFF?text=UM" alt="Logo"><span id="headerBrandName">UniMart</span></div>
+            <div class="header-actions">
+                <i class="fas fa-globe" onclick="toggleLanguage()"></i>
+                <i class="fas fa-bell" onclick="showToast(t('noNotif'),'info')"></i>
+            </div>
+        </header>
+
+        <!-- HOME -->
+        <div id="page-home" class="page active">
+            <div class="banner-carousel" id="bannerCarousel"><div class="banner-dots" id="bannerDots"></div></div>
+            <div class="countdown-box">
+                <div class="countdown-item"><span class="number" id="cdDays">00</span><span class="label" id="lblDay">দিন</span></div>
+                <div class="countdown-item"><span class="number" id="cdHours">00</span><span class="label" id="lblHour">ঘণ্টা</span></div>
+                <div class="countdown-item"><span class="number" id="cdMinutes">00</span><span class="label" id="lblMin">মিনিট</span></div>
+                <div class="countdown-item"><span class="number" id="cdSeconds">00</span><span class="label" id="lblSec">সেকেন্ড</span></div>
+            </div>
+            <div class="quick-actions">
+                <div class="quick-action-item" onclick="navigateTo('recharge')"><div class="quick-action-icon"><i class="fas fa-plus"></i></div><span id="qaRecharge">রিচার্জ</span></div>
+                <div class="quick-action-item" onclick="navigateTo('withdraw')"><div class="quick-action-icon"><i class="fas fa-download"></i></div><span id="qaWithdraw">উত্তোলন</span></div>
+                <div class="quick-action-item" onclick="navigateTo('mission')"><div class="quick-action-icon"><i class="fas fa-medal"></i></div><span id="qaMission">মিশন</span></div>
+                <div class="quick-action-item" onclick="navigateTo('apps')"><div class="quick-action-icon"><i class="fas fa-mobile-alt"></i></div><span id="qaApps">অ্যাপস</span></div>
+            </div>
+            <div class="series-tabs" id="seriesTabs"></div>
+            <div id="planList"></div>
+        </div>
+
+        <!-- ORDER -->
+        <div id="page-order" class="page">
+            <h2 style="margin-bottom:16px" id="orderTitle">আমার অর্ডার</h2>
+            <div id="orderList"></div>
+        </div>
+
+        <!-- TEAM -->
+        <div id="page-team" class="page">
+            <h2 style="margin-bottom:16px" id="teamTitle">টিম সেন্টার</h2>
+            <div class="referral-box">
+                <div><div style="font-size:12px;color:var(--text-muted)" id="teamInviteLabel">আমার ইনভাইট কোড</div><div class="code" id="teamInviteCode">------</div></div>
+                <button class="btn btn-primary" style="width:auto;padding:8px 16px;font-size:14px" onclick="copyReferral()"><i class="fas fa-copy"></i> <span id="btnCopy">কপি</span></button>
+            </div>
+            <div class="team-stats">
+                <div class="team-stat-card"><div class="number" id="teamTotalMembers">0</div><div class="label" id="lblTotalMembers">মোট মেম্বার</div></div>
+                <div class="team-stat-card"><div class="number" id="teamActiveMembers">0</div><div class="label" id="lblActiveMembers">সক্রিয় টিম</div></div>
+            </div>
+            <div class="card">
+                <h3 style="font-size:16px;margin-bottom:12px" id="commissionTitle">কমিশন রেট</h3>
+                <div class="grid grid-cols-3 gap-2 text-center">
+                    <div><div style="font-size:18px;font-weight:700;color:var(--primary)">15%</div><div style="font-size:12px;color:var(--text-muted)" id="lblL1">লেভেল ১</div></div>
+                    <div><div style="font-size:18px;font-weight:700;color:var(--primary)">2%</div><div style="font-size:12px;color:var(--text-muted)" id="lblL2">লেভেল ২</div></div>
+                    <div><div style="font-size:18px;font-weight:700;color:var(--primary)">1%</div><div style="font-size:12px;color:var(--text-muted)" id="lblL3">লেভেল ৩</div></div>
+                </div>
+            </div>
+            <div id="teamMemberList"></div>
+        </div>
+
+        <!-- PROFILE -->
+        <div id="page-profile" class="page">
+            <div class="flex items-center gap-4 mb-4">
+                <img src="https://i.ibb.co/sdqfvtRz/file-169.jpg" alt="Profile" id="profileImage" style="width:64px;height:64px;border-radius:50%;object-fit:cover">
+                <div>
+                    <div style="font-size:18px;font-weight:700" id="profileName">User</div>
+                    <div style="font-size:14px;color:var(--text-muted)"><span id="profileIdLabel">আইডি:</span> <span id="profileInviteCode">------</span></div>
+                    <span class="text-primary" style="font-size:12px;cursor:pointer" onclick="showEditProfileModal()" id="editProfileLink">প্রোফাইল এডিট করুন</span>
+                </div>
+            </div>
+            <div class="wallet-balance-card">
+                <div class="label" id="balanceLabel">আমার ব্যালেন্স</div>
+                <div class="amount">৳ <span id="profileBalance">0.00</span></div>
+                <div class="wallet-actions">
+                    <button class="wallet-action-btn" onclick="navigateTo('recharge')"><i class="fas fa-plus-circle"></i> <span id="waRecharge">রিচার্জ</span></button>
+                    <button class="wallet-action-btn" onclick="navigateTo('withdraw')"><i class="fas fa-arrow-circle-down"></i> <span id="waWithdraw">উত্তোলন</span></button>
+                    <button class="wallet-action-btn" onclick="navigateTo('mission')"><i class="fas fa-medal"></i> <span id="waMission">মিশন</span></button>
+                    <button class="wallet-action-btn" onclick="navigateTo('bank')"><i class="fas fa-university"></i> <span id="waBank">ব্যাংক</span></button>
+                </div>
+            </div>
+            <div class="income-cards">
+                <div class="income-card"><div class="label" id="incToday">আজকের আয়</div><div class="amount">৳ <span id="todayIncome">0.00</span></div></div>
+                <div class="income-card"><div class="label" id="incTotal">মোট আয়</div><div class="amount">৳ <span id="totalIncome">0.00</span></div></div>
+                <div class="income-card"><div class="label" id="incTeam">টিম আয়</div><div class="amount">৳ <span id="teamIncome">0.00</span></div></div>
+            </div>
+            <div class="menu-list">
+                <div class="menu-item" onclick="navigateTo('history')"><div class="left"><i class="fas fa-file-invoice"></i> <span id="mBill">বিল হিস্ট্রি</span></div><div class="right"><i class="fas fa-chevron-right"></i></div></div>
+                <div class="menu-item" onclick="navigateTo('support')"><div class="left"><i class="fas fa-headset"></i> <span id="mSupport">সার্ভিস / সাপোর্ট</span></div><div class="right"><i class="fas fa-chevron-right"></i></div></div>
+                <div class="menu-item" onclick="navigateTo('bonus')"><div class="left"><i class="fas fa-gift"></i> <span id="mBonus">দৈনিক বোনাস</span></div><div class="right"><i class="fas fa-chevron-right"></i></div></div>
+                <div class="menu-item" onclick="navigateTo('myInvestments')"><div class="left"><i class="fas fa-chart-line"></i> <span id="mInvestments">আমার ইনভেস্টমেন্ট</span></div><div class="right"><i class="fas fa-chevron-right"></i></div></div>
+                <div class="menu-item" onclick="navigateTo('bank')"><div class="left"><i class="fas fa-university"></i> <span id="mBank">ব্যাংক অ্যাকাউন্ট</span></div><div class="right"><i class="fas fa-chevron-right"></i></div></div>
+                <div class="menu-item" onclick="navigateTo('apps')"><div class="left"><i class="fas fa-download"></i> <span id="mApps">অ্যাপ ডাউনলোড</span></div><div class="right"><i class="fas fa-chevron-right"></i></div></div>
+                <div class="menu-item" onclick="showChangePasswordModal()"><div class="left"><i class="fas fa-lock"></i> <span id="mChangePass">পাসওয়ার্ড পরিবর্তন</span></div><div class="right"><i class="fas fa-chevron-right"></i></div></div>
+                <div class="menu-item" onclick="handleLogout()"><div class="left" style="color:var(--danger)"><i class="fas fa-sign-out-alt" style="color:var(--danger)"></i> <span id="mLogout">লগ আউট</span></div><div class="right"><i class="fas fa-chevron-right"></i></div></div>
+            </div>
+        </div>
+
+        <!-- RECHARGE -->
+        <div id="page-recharge" class="page">
+            <div class="flex items-center gap-2 mb-4"><i class="fas fa-arrow-left" style="font-size:20px;cursor:pointer" onclick="navigateTo('home')"></i><h2 id="rechargeTitle">রিচার্জ</h2></div>
+            <div class="card">
+                <div class="input-group"><label id="lblRechargeAmount">পরিমাণ (টাকা)</label><div class="input-wrapper"><input type="number" id="rechargeAmount" placeholder="পরিমাণ লিখুন" min="300"></div></div>
+                <div class="input-group">
+                    <label id="lblRechargeMethod">পেমেন্ট মেথড</label>
+                    <div class="input-wrapper"><select id="rechargeMethod" onchange="updateRechargeNumber()"><option value="bkash">বিকাশ (bKash)</option><option value="nagad">নগদ (Nagad)</option></select></div>
+                </div>
+                <div class="deposit-number-card">
+                    <div style="font-size:14px;color:var(--text-muted)" id="lblSendMoney">টাকা পাঠান এই নম্বরে</div>
+                    <div class="number" id="paymentNumber">01928321974</div>
+                    <div class="note" id="lblSendMoneyNote">শুধুমাত্র সেন্ড মানি গ্রহণ করা হয়</div>
+                </div>
+                <div class="input-group"><label id="lblTrxId">ট্রানজেকশন আইডি</label><div class="input-wrapper"><input type="text" id="rechargeTrxId" placeholder="TrxID লিখুন"></div></div>
+                <button class="btn btn-primary" onclick="submitRecharge()" id="btnRecharge">রিচার্জ করুন</button>
+            </div>
+        </div>
+
+        <!-- WITHDRAW -->
+        <div id="page-withdraw" class="page">
+            <div class="flex items-center gap-2 mb-4"><i class="fas fa-arrow-left" style="font-size:20px;cursor:pointer" onclick="navigateTo('home')"></i><h2 id="withdrawTitle">উত্তোলন</h2></div>
+            <div class="card" id="withdrawNoAccount" style="display:none">
+                <div class="empty-state">
+                    <i class="fas fa-university"></i>
+                    <p id="noAccountMsg">উত্তোলন করতে আগে ব্যাংক অ্যাকাউন্ট যোগ করুন</p>
+                    <button class="btn btn-primary mt-4" onclick="navigateTo('bank')" id="btnAddAccount">ব্যাংক অ্যাকাউন্ট যোগ করুন</button>
+                </div>
+            </div>
+            <div class="card" id="withdrawForm">
+                <div class="mb-4"><div class="label" style="font-size:14px;color:var(--text-muted)" id="lblAvailableBalance">উপলব্ধ ব্যালেন্স</div><div style="font-size:24px;font-weight:700;color:var(--primary)">৳ <span id="withdrawBalance">0.00</span></div></div>
+                <div class="input-group"><label id="lblWithdrawAmount">উত্তোলনের পরিমাণ (সর্বনিম্ন ২০০ টাকা)</label><div class="input-wrapper"><input type="number" id="withdrawAmount" placeholder="পরিমাণ লিখুন" min="200"></div></div>
+                <div class="input-group"><label id="lblSelectAccount">অ্যাকাউন্ট নির্বাচন করুন</label><div id="withdrawAccountList"></div></div>
+                <button class="btn btn-primary" onclick="submitWithdraw()" id="btnWithdraw">উত্তোলন করুন</button>
+            </div>
+        </div>
+
+        <!-- BANK -->
+        <div id="page-bank" class="page">
+            <div class="flex items-center gap-2 mb-4"><i class="fas fa-arrow-left" style="font-size:20px;cursor:pointer" onclick="navigateTo('profile')"></i><h2 id="bankTitle">ব্যাংক অ্যাকাউন্ট</h2></div>
+            <div id="bankAccountList"></div>
+            <div class="card">
+                <h3 style="margin-bottom:12px" id="addBankTitle">নতুন অ্যাকাউন্ট যোগ করুন</h3>
+                <div class="input-group"><label id="lblBankMethod">পেমেন্ট মেথড</label><div class="input-wrapper"><select id="bankMethod"><option value="bkash">বিকাশ (bKash)</option><option value="nagad">নগদ (Nagad)</option></select></div></div>
+                <div class="input-group"><label id="lblBankHolder">অ্যাকাউন্ট হোল্ডারের নাম</label><div class="input-wrapper"><input type="text" id="bankHolderName" placeholder="নাম লিখুন"></div></div>
+                <div class="input-group"><label id="lblBankNumber">মোবাইল নম্বর</label><div class="input-wrapper"><input type="text" id="bankAccountNumber" placeholder="নম্বর লিখুন"></div></div>
+                <button class="btn btn-primary" onclick="addBankAccount()" id="btnAddBank">অ্যাকাউন্ট যোগ করুন</button>
+            </div>
+        </div>
+
+        <!-- MISSION -->
+        <div id="page-mission" class="page">
+            <div class="flex items-center gap-2 mb-4"><i class="fas fa-arrow-left" style="font-size:20px;cursor:pointer" onclick="navigateTo('home')"></i><h2 id="missionTitle">মিশন</h2></div>
+            <div class="card" id="missionCard">
+                <div class="flex justify-between items-center mb-2"><h3 id="missionHead">১০ জন রেফার করুন</h3><span class="badge badge-success">+৩০০ টাকা</span></div>
+                <p class="text-muted" style="font-size:14px;margin-bottom:12px" id="missionDesc">১০ জন রেফার করে যেকোনো একটি প্যাকেজ কিনলে ৩০০ টাকা পাবেন।</p>
+                <div style="display:flex;justify-content:space-between;margin-bottom:12px;font-size:14px">
+                    <span><span id="missionLabel">আপনার রেফার:</span> <span class="font-bold" id="missionCount">0</span>/১০</span>
+                    <span><span id="missionRewardLabel">পুরস্কার:</span> ৳৩০০</span>
+                </div>
+                <div style="background:var(--border);height:8px;border-radius:4px;overflow:hidden;margin-bottom:12px"><div id="missionProgress" style="background:var(--primary);height:100%;width:0%;transition:width .3s"></div></div>
+                <button class="btn btn-primary" id="missionClaimBtn" onclick="claimMissionReward()" disabled style="opacity:.5">ক্লেইম করুন</button>
+            </div>
+        </div>
+
+        <!-- APPS -->
+        <div id="page-apps" class="page">
+            <div class="flex items-center gap-2 mb-4"><i class="fas fa-arrow-left" style="font-size:20px;cursor:pointer" onclick="navigateTo('home')"></i><h2 id="appsTitle">অ্যাপ ডাউনলোড</h2></div>
+            <div class="card text-center" style="padding:40px">
+                <img src="https://placehold.co/80x80/16A34A/FFFFFF?text=UM" style="border-radius:20px;margin-bottom:16px">
+                <h3 id="appName">UniMart অ্যাপ</h3>
+                <p class="text-muted" style="margin-bottom:16px" id="appVersion">সংস্করণ: 1.0.0</p>
+                <a href="#" id="appDownloadLink" class="btn btn-primary" style="text-decoration:none" target="_blank"><i class="fas fa-download"></i> <span id="btnDownload">ডাউনলোড</span></a>
+            </div>
+        </div>
+
+        <!-- SUPPORT -->
+        <div id="page-support" class="page">
+            <div class="flex items-center gap-2 mb-4"><i class="fas fa-arrow-left" style="font-size:20px;cursor:pointer" onclick="navigateTo('profile')"></i><h2 id="supportTitle">সার্ভিস / সাপোর্ট</h2></div>
+            <div class="card text-center">
+                <i class="fab fa-telegram" style="font-size:48px;color:#0088cc;margin-bottom:16px"></i>
+                <h3 id="supportHead">টেলিগ্রাম সাপোর্ট</h3>
+                <p class="text-muted" style="margin-bottom:16px" id="supportDesc">যেকোনো সমস্যায় আমাদের সাথে যোগাযোগ করুন</p>
+                <div style="display:flex;gap:12px;justify-content:center">
+                    <a href="#" id="supportGroupLink" target="_blank" class="btn btn-primary" style="text-decoration:none;width:auto;padding:10px 20px"><i class="fab fa-telegram"></i> <span id="btnSupportGroup">সাপোর্ট গ্রুপ</span></a>
+                    <a href="#" id="supportChannelLink" target="_blank" class="btn btn-outline" style="text-decoration:none;width:auto;padding:10px 20px"><i class="fab fa-telegram"></i> <span id="btnChannel">চ্যানেল</span></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- HISTORY -->
+        <div id="page-history" class="page">
+            <div class="flex items-center gap-2 mb-4"><i class="fas fa-arrow-left" style="font-size:20px;cursor:pointer" onclick="navigateTo('profile')"></i><h2 id="historyTitle">বিল হিস্ট্রি</h2></div>
+            <div id="historyList"></div>
+        </div>
+
+        <!-- BONUS -->
+        <div id="page-bonus" class="page">
+            <div class="flex items-center gap-2 mb-4"><i class="fas fa-arrow-left" style="font-size:20px;cursor:pointer" onclick="navigateTo('profile')"></i><h2 id="bonusTitle">দৈনিক বোনাস</h2></div>
+            <div class="card text-center">
+                <i class="fas fa-gift" style="font-size:48px;color:var(--primary);margin-bottom:16px"></i>
+                <h3 id="bonusHead">দৈনিক বোনাস</h3>
+                <p class="text-muted" style="margin-bottom:16px" id="bonusDesc">প্রতিদিন ৫ টাকা বোনাস পান (২৪ ঘণ্টা পর পর)</p>
+                <button class="btn btn-primary" id="dailyBonusBtn" onclick="claimDailyBonus()">ক্লেইম করুন</button>
+            </div>
+        </div>
+
+        <!-- MY INVESTMENTS -->
+        <div id="page-myInvestments" class="page">
+            <div class="flex items-center gap-2 mb-4"><i class="fas fa-arrow-left" style="font-size:20px;cursor:pointer" onclick="navigateTo('profile')"></i><h2 id="invTitle">আমার ইনভেস্টমেন্ট</h2></div>
+            <div id="myInvestmentList"></div>
+        </div>
+
+        <!-- BOTTOM NAV -->
+        <nav class="bottom-nav">
+            <div class="nav-item active" onclick="navigateTo('home',this)"><i class="fas fa-home"></i><span id="navHome">হোম</span></div>
+            <div class="nav-item" onclick="navigateTo('order',this)"><i class="fas fa-clipboard-list"></i><span id="navOrder">অর্ডার</span></div>
+            <div class="nav-item" onclick="navigateTo('team',this)"><i class="fas fa-users"></i><span id="navTeam">টিম</span></div>
+            <div class="nav-item" onclick="navigateTo('profile',this)"><i class="fas fa-user"></i><span id="navProfile">মাই</span></div>
+        </nav>
+    </div>
+
+    <!-- PURCHASE MODAL -->
+    <div class="modal-overlay" id="purchaseModal">
+        <div class="modal-content">
+            <div class="modal-header"><h3 id="purchaseTitle">প্যাকেজ কনফার্মেশন</h3><button class="modal-close" onclick="closeModal('purchaseModal')">&times;</button></div>
+            <div class="modal-body" id="purchaseModalBody"></div>
+            <div class="modal-footer"><button class="btn btn-primary" onclick="confirmPurchase()" id="btnConfirmPurchase">প্যাকেজ কিনুন</button></div>
+        </div>
+    </div>
+
+    <!-- CHANGE PASSWORD MODAL -->
+    <div class="modal-overlay" id="changePasswordModal">
+        <div class="modal-content">
+            <div class="modal-header"><h3 id="changePassTitle">পাসওয়ার্ড পরিবর্তন</h3><button class="modal-close" onclick="closeModal('changePasswordModal')">&times;</button></div>
+            <div class="modal-body">
+                <div class="input-group"><label id="lblOldPass">পুরাতন পাসওয়ার্ড</label><input type="password" id="oldPassword" style="padding:12px;width:100%;border:1px solid var(--border);border-radius:var(--radius)"></div>
+                <div class="input-group"><label id="lblNewPass">নতুন পাসওয়ার্ড</label><input type="password" id="newPassword" style="padding:12px;width:100%;border:1px solid var(--border);border-radius:var(--radius)"></div>
+                <div class="input-group"><label id="lblConfirmNewPass">নতুন পাসওয়ার্ড নিশ্চিত করুন</label><input type="password" id="confirmNewPassword" style="padding:12px;width:100%;border:1px solid var(--border);border-radius:var(--radius)"></div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-primary" onclick="changePassword()" id="btnChangePass">আপডেট করুন</button></div>
+        </div>
+    </div>
+
+    <!-- EDIT PROFILE MODAL -->
+    <div class="modal-overlay" id="editProfileModal">
+        <div class="modal-content">
+            <div class="modal-header"><h3 id="editProfileTitle">প্রোফাইল এডিট</h3><button class="modal-close" onclick="closeModal('editProfileModal')">&times;</button></div>
+            <div class="modal-body">
+                <div class="input-group"><label id="lblEditName">নাম</label><input type="text" id="editName" style="padding:12px;width:100%;border:1px solid var(--border);border-radius:var(--radius)"></div>
+                <div class="input-group"><label id="lblEditImage">প্রোফাইল ছবি (URL)</label><input type="text" id="editImage" style="padding:12px;width:100%;border:1px solid var(--border);border-radius:var(--radius)" placeholder="https://..."></div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-primary" onclick="saveProfileEdit()" id="btnSaveProfile">সেভ করুন</button></div>
+        </div>
+    </div>
+
+    <!-- FIREBASE SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script>
+        // ==========================================
+        // FIREBASE
+        // ==========================================
+        const firebaseConfig = {
+  apiKey: "AIzaSyDlEJlcxCgXCtriN9zH7z74v0daizJq3Qs",
+  authDomain: "unimartupla.firebaseapp.com",
+  projectId: "unimartupla",
+  storageBucket: "unimartupla.firebasestorage.app",
+  messagingSenderId: "164255627199",
+  appId: "1:164255627199:web:2cb9464f141a32b1a6130a"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // ==========================================
+        // LANGUAGE
+        // ==========================================
+        const TRANSLATIONS = {
+            bn: { authTagline:"আপনার বিশ্বস্ত ইনভেস্টমেন্ট প্ল্যাটফর্ম",tabLogin:"সাইন ইন",tabRegister:"সাইন আপ",labelLoginPhone:"ফোন নম্বর",labelLoginPass:"পাসওয়ার্ড",forgotPass:"পাসওয়ার্ড ভুলে গেছেন?",btnLogin:"সাইন ইন",labelRegPhone:"ফোন নম্বর",labelRegOtp:"ভেরিফিকেশন কোড",otpBtn:"কোড পাঠান",labelRegPass:"পাসওয়ার্ড",labelRegConfirm:"পাসওয়ার্ড নিশ্চিত করুন",labelRegInvite:"ইনভাইট কোড (ঐচ্ছিক)",btnRegister:"সাইন আপ",welcomeTitle:"🎉 স্বাগতম!",welcomeHeading:"আমাদের প্ল্যাটফর্মে আপনাকে স্বাগতম!",welcomeMsg:"আমরা আপনার বিশ্বস্ত ইনভেস্টমেন্ট পার্টনার।",noNotif:"নতুন কোনো নোটিফিকেশন নেই",lblDay:"দিন",lblHour:"ঘণ্টা",lblMin:"মিনিট",lblSec:"সেকেন্ড",qaRecharge:"রিচার্জ",qaWithdraw:"উত্তোলন",qaMission:"মিশন",qaApps:"অ্যাপস",orderTitle:"আমার অর্ডার",teamTitle:"টিম সেন্টার",teamInviteLabel:"আমার ইনভাইট কোড",btnCopy:"কপি",lblTotalMembers:"মোট মেম্বার",lblActiveMembers:"সক্রিয় টিম",commissionTitle:"কমিশন রেট",lblL1:"লেভেল ১",lblL2:"লেভেল ২",lblL3:"লেভেল ৩",profileIdLabel:"আইডি:",editProfileLink:"প্রোফাইল এডিট করুন",balanceLabel:"আমার ব্যালেন্স",waRecharge:"রিচার্জ",waWithdraw:"উত্তোলন",waMission:"মিশন",waBank:"ব্যাংক",incToday:"আজকের আয়",incTotal:"মোট আয়",incTeam:"টিম আয়",mBill:"বিল হিস্ট্রি",mSupport:"সার্ভিস / সাপোর্ট",mBonus:"দৈনিক বোনাস",mInvestments:"আমার ইনভেস্টমেন্ট",mBank:"ব্যাংক অ্যাকাউন্ট",mApps:"অ্যাপ ডাউনলোড",mChangePass:"পাসওয়ার্ড পরিবর্তন",mLogout:"লগ আউট",rechargeTitle:"রিচার্জ",lblRechargeAmount:"পরিমাণ (টাকা)",lblRechargeMethod:"পেমেন্ট মেথড",lblSendMoney:"টাকা পাঠান এই নম্বরে",lblSendMoneyNote:"শুধুমাত্র সেন্ড মানি গ্রহণ করা হয়",lblTrxId:"ট্রানজেকশন আইডি",btnRecharge:"রিচার্জ করুন",withdrawTitle:"উত্তোলন",noAccountMsg:"উত্তোলন করতে আগে ব্যাংক অ্যাকাউন্ট যোগ করুন",btnAddAccount:"ব্যাংক অ্যাকাউন্ট যোগ করুন",lblAvailableBalance:"উপলব্ধ ব্যালেন্স",lblWithdrawAmount:"উত্তোলনের পরিমাণ (সর্বনিম্ন ২০০ টাকা)",lblSelectAccount:"অ্যাকাউন্ট নির্বাচন করুন",btnWithdraw:"উত্তোলন করুন",bankTitle:"ব্যাংক অ্যাকাউন্ট",addBankTitle:"নতুন অ্যাকাউন্ট যোগ করুন",lblBankMethod:"পেমেন্ট মেথড",lblBankHolder:"অ্যাকাউন্ট হোল্ডারের নাম",lblBankNumber:"মোবাইল নম্বর",btnAddBank:"অ্যাকাউন্ট যোগ করুন",missionTitle:"মিশন",missionHead:"১০ জন রেফার করুন",missionDesc:"১০ জন রেফার করে যেকোনো একটি প্যাকেজ কিনলে ৩০০ টাকা পাবেন।",missionLabel:"আপনার রেফার:",missionRewardLabel:"পুরস্কার:",missionClaimBtn:"ক্লেইম করুন",appsTitle:"অ্যাপ ডাউনলোড",appName:"UniMart অ্যাপ",appVersion:"সংস্করণ: 1.0.0",btnDownload:"ডাউনলোড",supportTitle:"সার্ভিস / সাপোর্ট",supportHead:"টেলিগ্রাম সাপোর্ট",supportDesc:"যেকোনো সমস্যায় আমাদের সাথে যোগাযোগ করুন",btnSupportGroup:"সাপোর্ট গ্রুপ",btnChannel:"চ্যানেল",historyTitle:"বিল হিস্ট্রি",bonusTitle:"দৈনিক বোনাস",bonusHead:"দৈনিক বোনাস",bonusDesc:"প্রতিদিন ৫ টাকা বোনাস পান (২৪ ঘণ্টা পর পর)",invTitle:"আমার ইনভেস্টমেন্ট",navHome:"হোম",navOrder:"অর্ডার",navTeam:"টিম",navProfile:"মাই",purchaseTitle:"প্যাকেজ কনফার্মেশন",btnConfirmPurchase:"প্যাকেজ কিনুন",changePassTitle:"পাসওয়ার্ড পরিবর্তন",lblOldPass:"পুরাতন পাসওয়ার্ড",lblNewPass:"নতুন পাসওয়ার্ড",lblConfirmNewPass:"নতুন পাসওয়ার্ড নিশ্চিত করুন",btnChangePass:"আপডেট করুন",editProfileTitle:"প্রোফাইল এডিট",lblEditName:"নাম",lblEditImage:"প্রোফাইল ছবি (URL)",btnSaveProfile:"সেভ করুন",noData:"কোনো ডেটা নেই",noOrder:"কোনো অর্ডার নেই",noInvestment:"কোনো ইনভেস্টমেন্ট নেই",noTxn:"কোনো লেনদেন নেই",noAccount:"কোনো অ্যাকাউন্ট নেই",noReferral:"কোনো রেফারেল নেই",planBuy:"এখনই কিনুন",planPrice:"মূল্য:",planDaily:"দৈনিক:",planDuration:"মেয়াদ:",planTotal:"মোট:",day:"দিন",active:"সক্রিয়",inactive:"নিষ্ক্রিয়",completed:"সম্পন্ন",bkash:"বিকাশ",nagad:"নগদ",referralCopied:"রেফারেল লিংক কপি হয়েছে!",bonusClaimed:"দৈনিক বোনাস পেয়েছেন!",bonusWait:"আবার ক্লেইম করতে অপেক্ষা করুন",missionClaimed:"মিশন পুরস্কার পেয়েছেন!",missionNotDone:"আপনি এখনো টার্গেট পূরণ করেননি",insufficientBalance:"পর্যাপ্ত ব্যালেন্স নেই",wrongPass:"ভুল ফোন নম্বর বা পাসওয়ার্ড",passMismatch:"পাসওয়ার্ড মিলছে না",accountExists:"এই নম্বর দিয়ে অ্যাকাউন্ট আছে",regSuccess:"অ্যাকাউন্ট তৈরি হয়েছে! ৫০ টাকা বোনাস পেয়েছেন।",loginSuccess:"সফলভাবে লগইন হয়েছে!",logoutSuccess:"লগ আউট হয়েছে",withdrawSuccess:"উত্তোলন অনুরোধ পাঠানো হয়েছে",rechargeSuccess:"রিচার্জ অনুরোধ পাঠানো হয়েছে",minWithdraw:"সর্বনিম্ন উত্তোলন ২০০ টাকা",minDeposit:"সর্বনিম্ন ডিপোজিট ৩০০ টাকা",selectAccount:"একটি অ্যাকাউন্ট নির্বাচন করুন",enterAmount:"সঠিক পরিমাণ লিখুন",enterTrxId:"ট্রানজেকশন আইডি দিন",enterNameNumber:"নাম এবং নম্বর দিন",accountAdded:"অ্যাকাউন্ট যোগ করা হয়েছে",accountDeleted:"অ্যাকাউন্ট মুছে ফেলা হয়েছে",packageBought:"প্যাকেজ সফলভাবে কেনা হয়েছে!",profileUpdated:"প্রোফাইল আপডেট হয়েছে",passChanged:"পাসওয়ার্ড পরিবর্তন হয়েছে",oldPassWrong:"পুরাতন পাসওয়ার্ড ভুল",otpSent:"OTP পাঠানো হয়েছে: ",dailyIncome:"দৈনিক আয় যোগ হয়েছে!",firebaseError:"ডেটাবেস কনেকশন সমস্যা!" },
+            en: { authTagline:"Your Trusted Investment Platform",tabLogin:"Sign In",tabRegister:"Sign Up",labelLoginPhone:"Phone Number",labelLoginPass:"Password",forgotPass:"Forgot Password?",btnLogin:"Sign In",labelRegPhone:"Phone Number",labelRegOtp:"Verification Code",otpBtn:"Send Code",labelRegPass:"Password",labelRegConfirm:"Confirm Password",labelRegInvite:"Invite Code (Optional)",btnRegister:"Sign Up",welcomeTitle:"🎉 Welcome!",welcomeHeading:"Welcome to Our Platform!",welcomeMsg:"We are your trusted investment partner.",noNotif:"No new notifications",lblDay:"Days",lblHour:"Hours",lblMin:"Minutes",lblSec:"Seconds",qaRecharge:"Recharge",qaWithdraw:"Withdraw",qaMission:"Mission",qaApps:"Apps",orderTitle:"My Orders",teamTitle:"Team Center",teamInviteLabel:"My Invite Code",btnCopy:"Copy",lblTotalMembers:"Total Members",lblActiveMembers:"Active Team",commissionTitle:"Commission Rates",lblL1:"Level 1",lblL2:"Level 2",lblL3:"Level 3",profileIdLabel:"ID:",editProfileLink:"Edit Profile",balanceLabel:"My Balance",waRecharge:"Recharge",waWithdraw:"Withdraw",waMission:"Mission",waBank:"Bank",incToday:"Today's Income",incTotal:"Total Income",incTeam:"Team Income",mBill:"Bill History",mSupport:"Service / Support",mBonus:"Daily Bonus",mInvestments:"My Investments",mBank:"Bank Account",mApps:"App Download",mChangePass:"Change Password",mLogout:"Logout",rechargeTitle:"Recharge",lblRechargeAmount:"Amount (Tk)",lblRechargeMethod:"Payment Method",lblSendMoney:"Send Money to this Number",lblSendMoneyNote:"Only Send Money is accepted",lblTrxId:"Transaction ID",btnRecharge:"Recharge",withdrawTitle:"Withdraw",noAccountMsg:"Please add a bank account first to withdraw",btnAddAccount:"Add Bank Account",lblAvailableBalance:"Available Balance",lblWithdrawAmount:"Withdraw Amount (Min 200 Tk)",lblSelectAccount:"Select Account",btnWithdraw:"Withdraw",bankTitle:"Bank Account",addBankTitle:"Add New Account",lblBankMethod:"Payment Method",lblBankHolder:"Account Holder Name",lblBankNumber:"Mobile Number",btnAddBank:"Add Account",missionTitle:"Mission",missionHead:"Refer 10 People",missionDesc:"Refer 10 people and when they buy any package, you get 300 Tk.",missionLabel:"Your Referrals:",missionRewardLabel:"Reward:",missionClaimBtn:"Claim",appsTitle:"App Download",appName:"UniMart App",appVersion:"Version: 1.0.0",btnDownload:"Download",supportTitle:"Service / Support",supportHead:"Telegram Support",supportDesc:"Contact us for any issue",btnSupportGroup:"Support Group",btnChannel:"Channel",historyTitle:"Bill History",bonusTitle:"Daily Bonus",bonusHead:"Daily Bonus",bonusDesc:"Get 5 Tk daily bonus (every 24 hours)",invTitle:"My Investments",navHome:"Home",navOrder:"Orders",navTeam:"Team",navProfile:"My",purchaseTitle:"Package Confirmation",btnConfirmPurchase:"Buy Package",changePassTitle:"Change Password",lblOldPass:"Old Password",lblNewPass:"New Password",lblConfirmNewPass:"Confirm New Password",btnChangePass:"Update",editProfileTitle:"Edit Profile",lblEditName:"Name",lblEditImage:"Profile Image (URL)",btnSaveProfile:"Save",noData:"No Data",noOrder:"No Orders",noInvestment:"No Investments",noTxn:"No Transactions",noAccount:"No Accounts",noReferral:"No Referrals",planBuy:"Buy Now",planPrice:"Price:",planDaily:"Daily:",planDuration:"Duration:",planTotal:"Total:",day:"Days",active:"Active",inactive:"Inactive",completed:"Completed",bkash:"bKash",nagad:"Nagad",referralCopied:"Referral link copied!",bonusClaimed:"Daily bonus received!",bonusWait:"Please wait to claim again",missionClaimed:"Mission reward received!",missionNotDone:"You haven't completed the target yet",insufficientBalance:"Insufficient balance",wrongPass:"Wrong phone or password",passMismatch:"Passwords do not match",accountExists:"Account already exists with this number",regSuccess:"Account created! You got 50 Tk bonus.",loginSuccess:"Logged in successfully!",logoutSuccess:"Logged out",withdrawSuccess:"Withdraw request sent",rechargeSuccess:"Recharge request sent",minWithdraw:"Minimum withdrawal 200 Tk",minDeposit:"Minimum deposit 300 Tk",selectAccount:"Please select an account",enterAmount:"Enter a valid amount",enterTrxId:"Enter Transaction ID",enterNameNumber:"Enter name and number",accountAdded:"Account added",accountDeleted:"Account deleted",packageBought:"Package purchased successfully!",profileUpdated:"Profile updated",passChanged:"Password changed",oldPassWrong:"Old password is wrong",otpSent:"OTP sent: ",dailyIncome:"Daily income added!",firebaseError:"Database connection error!" }
+        };
+        let currentLang = localStorage.getItem('um_lang') || 'bn';
+        const t = (key) => TRANSLATIONS[currentLang][key] || key;
+        const toggleLanguage = () => {
+            currentLang = currentLang === 'bn' ? 'en' : 'bn';
+            localStorage.setItem('um_lang', currentLang);
+            applyLanguage(); renderAll();
+            showToast(currentLang === 'bn' ? 'ভাষা পরিবর্তন করা হয়েছে' : 'Language changed', 'info');
+        };
+        const applyLanguage = () => {
+            const ids = ['authTagline','tabLogin','tabRegister','labelLoginPhone','labelLoginPass','forgotPassLink','btnLogin','labelRegPhone','labelRegOtp','otpBtn','labelRegPass','labelRegConfirm','labelRegInvite','btnRegister','welcomeTitle','welcomeHeading','welcomeMsg','lblDay','lblHour','lblMin','lblSec','qaRecharge','qaWithdraw','qaMission','qaApps','orderTitle','teamTitle','teamInviteLabel','btnCopy','lblTotalMembers','lblActiveMembers','commissionTitle','lblL1','lblL2','lblL3','profileIdLabel','editProfileLink','balanceLabel','waRecharge','waWithdraw','waMission','waBank','incToday','incTotal','incTeam','mBill','mSupport','mBonus','mInvestments','mBank','mApps','mChangePass','mLogout','rechargeTitle','lblRechargeAmount','lblRechargeMethod','lblSendMoney','lblSendMoneyNote','lblTrxId','btnRecharge','withdrawTitle','noAccountMsg','btnAddAccount','lblAvailableBalance','lblWithdrawAmount','lblSelectAccount','btnWithdraw','bankTitle','addBankTitle','lblBankMethod','lblBankHolder','lblBankNumber','btnAddBank','missionTitle','missionHead','missionDesc','missionLabel','missionRewardLabel','missionClaimBtn','appsTitle','appName','appVersion','btnDownload','supportTitle','supportHead','supportDesc','btnSupportGroup','btnChannel','historyTitle','bonusTitle','bonusHead','bonusDesc','invTitle','navHome','navOrder','navTeam','navProfile','purchaseTitle','btnConfirmPurchase','changePassTitle','lblOldPass','lblNewPass','lblConfirmNewPass','btnChangePass','editProfileTitle','lblEditName','lblEditImage','btnSaveProfile'];
+            ids.forEach(id => { const el = document.getElementById(id); if(el && TRANSLATIONS[currentLang][id]) el.textContent = TRANSLATIONS[currentLang][id]; });
+        };
+
+        // ==========================================
+        // CONFIG
+        // ==========================================
+        const CONFIG = { registrationBonus:50, minWithdraw:200, minDeposit:300, withdrawFee:10, commissionL1:15, referralMissionTarget:10, referralMissionReward:300, dailyBonusAmount:5 };
+
+        let currentUser = null;
+        let currentSeries = 'A';
+        let selectedPlan = null;
+        let bannerIndex = 0;
+        let bannerInterval = null;
+        let countdownInterval = null;
+        let plansCache = [];
+        let bannersCache = [];
+        let settingsCache = {};
+        let allTransactionsCache = {};
+
+        // ==========================================
+        // UTILITIES
+        // ==========================================
+        const showLoading = (show) => document.getElementById('loadingOverlay').classList.toggle('active', show);
+        const showToast = (msg, type = 'info') => {
+            const c = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            let icon = 'fa-info-circle';
+            if (type === 'success') icon = 'fa-check-circle';
+            if (type === 'error') icon = 'fa-exclamation-circle';
+            if (type === 'warning') icon = 'fa-exclamation-triangle';
+            toast.innerHTML = `<i class="fas ${icon}"></i> <span>${msg}</span>`;
+            c.appendChild(toast);
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
+        };
+        const togglePassword = (id, icon) => {
+            const input = document.getElementById(id);
+            if (input.type === 'password') { input.type = 'text'; icon.classList.replace('fa-eye','fa-eye-slash'); }
+            else { input.type = 'password'; icon.classList.replace('fa-eye-slash','fa-eye'); }
+        };
+        const openModal = (id) => document.getElementById(id).classList.add('active');
+        const closeModal = (id) => document.getElementById(id).classList.remove('active');
+
+        // ==========================================
+        // AUTH
+        // ==========================================
+        const switchAuthTab = (tab) => {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            if (tab === 'login') {
+                document.querySelector('.auth-tab:nth-child(1)').classList.add('active');
+                document.getElementById('loginForm').classList.remove('hidden');
+                document.getElementById('registerForm').classList.add('hidden');
+            } else {
+                document.querySelector('.auth-tab:nth-child(2)').classList.add('active');
+                document.getElementById('registerForm').classList.remove('hidden');
+                document.getElementById('loginForm').classList.add('hidden');
+            }
+        };
+        const sendOtp = () => {
+            const btn = document.getElementById('otpBtn');
+            if (btn.disabled) return;
+            const otp = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('regOtp').value = otp;
+            let countdown = 60;
+            btn.disabled = true; btn.style.opacity = '0.6'; btn.textContent = `(${countdown}s)`;
+            const timer = setInterval(() => {
+                countdown--; btn.textContent = `(${countdown}s)`;
+                if (countdown <= 0) { clearInterval(timer); btn.disabled = false; btn.style.opacity = '1'; btn.textContent = t('otpBtn'); }
+            }, 1000);
+            showToast(t('otpSent') + otp, 'info');
+        };
+        const handleLogin = (e) => {
+            e.preventDefault();
+            const phone = document.getElementById('loginPhone').value;
+            const pass = document.getElementById('loginPassword').value;
+            if (!phone || !pass) { showToast(t('enterAmount'), 'error'); return; }
+            showLoading(true);
+            db.ref('users').orderByChild('phone').equalTo(phone).once('value')
+                .then((snap) => {
+                    showLoading(false);
+                    const data = snap.val();
+                    if (!data) { showToast(t('wrongPass'), 'error'); return; }
+                    const userId = Object.keys(data)[0];
+                    const user = data[userId];
+                    if (user.password !== pass) { showToast(t('wrongPass'), 'error'); return; }
+                    currentUser = user; currentUser.id = userId;
+                    localStorage.setItem('um_currentUser', JSON.stringify(currentUser));
+                    showMainApp();
+                    showToast(t('loginSuccess'), 'success');
+                    setTimeout(() => openModal('welcomeModal'), 500);
+                })
+                .catch((err) => { showLoading(false); showToast(t('firebaseError'), 'error'); console.error(err); });
+        };
+        const handleRegister = (e) => {
+            e.preventDefault();
+            const phone = document.getElementById('regPhone').value;
+            const pass = document.getElementById('regPassword').value;
+            const confirm = document.getElementById('regConfirmPassword').value;
+            const invite = document.getElementById('regInviteCode').value;
+            if (pass !== confirm) { showToast(t('passMismatch'), 'error'); return; }
+            if (!phone || !pass) { showToast(t('enterAmount'), 'error'); return; }
+            showLoading(true);
+            db.ref('users').orderByChild('phone').equalTo(phone).once('value')
+                .then((snap) => {
+                    if (snap.exists()) { showLoading(false); showToast(t('accountExists'), 'error'); return; }
+                    const userId = 'U' + Date.now();
+                    const newUser = {
+                        id: userId, phone: phone, name: 'User', image: 'https://i.ibb.co/sdqfvtRz/file-169.jpg',
+                        password: pass, inviteCode: phone.slice(-6).toUpperCase(),
+                        balance: CONFIG.registrationBonus, todayIncome: 0, totalIncome: 0, teamIncome: 0,
+                        referredBy: invite || null, accounts: [], investments: [], orders: [],
+                        joinDate: new Date().toISOString(), lastDailyBonusClaim: null, lastMissionClaim: null
+                    };
+                    db.ref('users/' + userId).set(newUser).then(() => {
+                        if (invite) {
+                            db.ref('users').orderByChild('inviteCode').equalTo(invite).once('value').then((refSnap) => {
+                                const refData = refSnap.val();
+                                if (refData) {
+                                    const refId = Object.keys(refData)[0];
+                                    const refUser = refData[refId];
+                                    const comm = (CONFIG.registrationBonus * CONFIG.commissionL1) / 100;
+                                    db.ref('users/' + refId).update({ balance: (refUser.balance || 0) + comm, teamIncome: (refUser.teamIncome || 0) + comm });
+                                    const txnRef = db.ref('transactions').push();
+                                    txnRef.set({ id: txnRef.key, userId: refId, type: 'Referral Commission', amount: comm, date: new Date().toISOString(), status: 'Completed' });
+                                }
+                            });
+                        }
+                        currentUser = newUser;
+                        localStorage.setItem('um_currentUser', JSON.stringify(currentUser));
+                        showLoading(false); showMainApp();
+                        showToast(t('regSuccess'), 'success');
+                        setTimeout(() => openModal('welcomeModal'), 500);
+                    }).catch((err) => { showLoading(false); showToast(t('firebaseError'), 'error'); });
+                })
+                .catch((err) => { showLoading(false); showToast(t('firebaseError'), 'error'); });
+        };
+        const handleLogout = () => {
+            if (currentUser) db.ref('users/' + currentUser.id).off();
+            currentUser = null; localStorage.removeItem('um_currentUser');
+            document.getElementById('authScreen').classList.remove('hidden');
+            document.getElementById('mainApp').classList.add('hidden');
+            showToast(t('logoutSuccess'), 'info');
+        };
+        const showMainApp = () => {
+            document.getElementById('authScreen').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+            applyLanguage(); renderAll();
+        };
+
+        // ==========================================
+        // FIREBASE LISTENERS
+        // ==========================================
+        const loadSettings = () => {
+            db.ref('settings').on('value', (snap) => { settingsCache = snap.val() || {}; updateSettingsUI(); startCountdown(); });
+        };
+        const loadBanners = () => {
+            db.ref('banners').on('value', (snap) => { bannersCache = snap.val() ? Object.values(snap.val()) : []; renderBanners(); });
+        };
+        const loadPlans = () => {
+            db.ref('plans').on('value', (snap) => { plansCache = snap.val() ? Object.values(snap.val()) : []; renderPlans(); });
+        };
+        const loadAllTransactions = () => {
+            db.ref('transactions').on('value', (snap) => { allTransactionsCache = snap.val() || {}; if (currentUser) renderTransactions(); });
+        };
+        const loadUser = (userId) => {
+            db.ref('users/' + userId).on('value', (snap) => {
+                const data = snap.val();
+                if (data) {
+                    currentUser = data;
+                    localStorage.setItem('um_currentUser', JSON.stringify(currentUser));
+                    renderProfile(); renderAccounts(); renderInvestments(); renderOrders(); renderTeam(); renderMission();
+                }
+            });
+        };
+
+        // ==========================================
+        // RENDERING
+        // ==========================================
+        const renderAll = () => {
+            renderBanners(); renderPlans(); renderProfile(); renderAccounts();
+            renderInvestments(); renderTransactions(); renderOrders(); renderTeam(); renderMission();
+            startCountdown(); updateRechargeNumber(); updateSettingsUI();
+        };
+        const updateSettingsUI = () => {
+            document.getElementById('paymentNumber').textContent = settingsCache.depositNumber || "01928321974";
+            document.getElementById('lblSendMoneyNote').textContent = settingsCache.depositNote || "শুধুমাত্র সেন্ড মানি গ্রহণ করা হয়";
+            document.getElementById('welcomeMsg').textContent = settingsCache.welcomeMsg || t('welcomeMsg');
+            document.getElementById('welcomeSupportLink').href = settingsCache.supportLink || "https://t.me/support";
+            document.getElementById('welcomeChannelLink').href = settingsCache.channelLink || "https://t.me/channel";
+            document.getElementById('supportGroupLink').href = settingsCache.supportLink || "https://t.me/support";
+            document.getElementById('supportChannelLink').href = settingsCache.channelLink || "https://t.me/channel";
+            document.getElementById('appDownloadLink').href = settingsCache.appDownloadLink || "#";
+        };
+        const renderBanners = () => {
+            const carousel = document.getElementById('bannerCarousel');
+            const banners = bannersCache.length > 0 ? bannersCache : [
+                { image: 'https://i.ibb.co/4gpn0qYJ/file-160.jpg', link: '#' },
+                { image: 'https://i.ibb.co/Gv9hZpyn/file-159.jpg', link: '#' }
+            ];
+            carousel.innerHTML = banners.map((b, i) => `<div class="banner-slide ${i === 0 ? 'active' : ''}" style="background-image:url('${b.image}');cursor:pointer" onclick="window.open('${b.link || '#'}','_blank')"></div>`).join('') + `<div class="banner-dots" id="bannerDots">${banners.map((_, i) => `<div class="banner-dot ${i === 0 ? 'active' : ''}" onclick="goToSlide(${i})"></div>`).join('')}</div>`;
+            if (bannerInterval) clearInterval(bannerInterval);
+            bannerIndex = 0;
+            bannerInterval = setInterval(() => { bannerIndex = (bannerIndex + 1) % banners.length; goToSlide(bannerIndex); }, 4000);
+        };
+        const goToSlide = (i) => {
+            document.querySelectorAll('.banner-slide').forEach((s, idx) => s.classList.toggle('active', idx === i));
+            document.querySelectorAll('.banner-dot').forEach((d, idx) => d.classList.toggle('active', idx === i));
+            bannerIndex = i;
+        };
+        const renderPlans = () => {
+            const tabs = document.getElementById('seriesTabs');
+            const uniqueSeries = [...new Set(plansCache.map(p => p.series))];
+            if (uniqueSeries.length === 0) uniqueSeries.push('A');
+            tabs.innerHTML = uniqueSeries.map(s => `<div class="series-tab ${s === currentSeries ? 'active' : ''}" onclick="switchSeries('${s}')">${s} সিরিজ</div>`).join('');
+            const list = document.getElementById('planList');
+            const filtered = plansCache.filter(p => p.series === currentSeries);
+            if (filtered.length === 0) { list.innerHTML = `<div class="empty-state"><i class="fas fa-box-open"></i><p>${t('noData')}</p></div>`; return; }
+            list.innerHTML = filtered.map(p => `
+                <div class="plan-card">
+                    <div class="plan-image"><img src="${p.image}" onerror="this.src='https://placehold.co/400x140/16A34A/FFFFFF?text=Plan'"></div>
+                    <div class="plan-info">
+                        <h3 style="font-size:16px;margin-bottom:8px">${p.name}</h3>
+                        <div class="plan-details">
+                            <div class="plan-detail-item"><i class="fas fa-tag"></i><span>${t('planPrice')} <span class="val">৳${p.price}</span></span></div>
+                            <div class="plan-detail-item"><i class="fas fa-clock"></i><span>${t('planDaily')} <span class="val">৳${p.dailyReturn}</span></span></div>
+                            <div class="plan-detail-item"><i class="fas fa-calendar-alt"></i><span>${t('planDuration')} <span class="val">${p.duration} ${t('day')}</span></span></div>
+                            <div class="plan-detail-item"><i class="fas fa-chart-line"></i><span>${t('planTotal')} <span class="val">৳${p.totalReturn}</span></span></div>
+                        </div>
+                        <button class="btn btn-primary" onclick="openPurchaseModal('${p.id}')"><i class="fas fa-shopping-cart"></i> ${t('planBuy')}</button>
+                    </div>
+                </div>`).join('');
+        };
+        const switchSeries = (s) => { currentSeries = s; renderPlans(); };
+        const renderProfile = () => {
+            if (!currentUser) return;
+            document.getElementById('profileName').textContent = currentUser.name || 'User';
+            document.getElementById('profileInviteCode').textContent = currentUser.inviteCode || '------';
+            document.getElementById('profileBalance').textContent = (currentUser.balance || 0).toFixed(2);
+            document.getElementById('withdrawBalance').textContent = (currentUser.balance || 0).toFixed(2);
+            document.getElementById('teamInviteCode').textContent = currentUser.inviteCode || '------';
+            document.getElementById('todayIncome').textContent = (currentUser.todayIncome || 0).toFixed(2);
+            document.getElementById('totalIncome').textContent = (currentUser.totalIncome || 0).toFixed(2);
+            document.getElementById('teamIncome').textContent = (currentUser.teamIncome || 0).toFixed(2);
+            if (currentUser.image) document.getElementById('profileImage').src = currentUser.image;
+        };
+        const renderAccounts = () => {
+            if (!currentUser) return;
+            const accounts = currentUser.accounts || [];
+            const bankList = document.getElementById('bankAccountList');
+            if (accounts.length === 0) bankList.innerHTML = `<div class="empty-state"><i class="fas fa-university"></i><p>${t('noAccount')}</p></div>`;
+            else bankList.innerHTML = accounts.map(acc => `
+                <div class="card flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <img src="${acc.method === 'bkash' ? 'https://i.ibb.co/M5jb77B2/file-63.jpg' : 'https://i.ibb.co/TxDH0YGh/file-64.jpg'}" style="width:40px;height:40px;border-radius:8px;object-fit:cover">
+                        <div><div class="font-bold">${acc.method === 'bkash' ? t('bkash') : t('nagad')}</div><div style="font-size:14px;color:var(--text-muted)">${acc.holderName}</div><div style="font-size:14px">${acc.accountNumber}</div></div>
+                    </div>
+                    <button class="btn btn-danger btn-sm" style="width:auto;padding:6px 12px;font-size:12px" onclick="deleteAccount('${acc.id}')"><i class="fas fa-trash"></i></button>
+                </div>`).join('');
+            const wList = document.getElementById('withdrawAccountList');
+            if (accounts.length === 0) {
+                wList.innerHTML = `<div class="empty-state" style="padding:20px"><p>${t('noAccount')}</p></div>`;
+                document.getElementById('withdrawNoAccount').style.display = 'block';
+                document.getElementById('withdrawForm').style.display = 'none';
+            } else {
+                wList.innerHTML = accounts.map(acc => `
+                    <div class="payment-method-option" onclick="selectWithdrawAccount('${acc.id}', this)">
+                        <img src="${acc.method === 'bkash' ? 'https://i.ibb.co/M5jb77B2/file-63.jpg' : 'https://i.ibb.co/TxDH0YGh/file-64.jpg'}">
+                        <div class="details"><div class="name">${acc.method === 'bkash' ? t('bkash') : t('nagad')}</div><div class="number">${acc.holderName} - ${acc.accountNumber}</div></div>
+                        <input type="radio" name="withdrawAccount" value="${acc.id}" style="accent-color:var(--primary)">
+                    </div>`).join('');
+                document.getElementById('withdrawNoAccount').style.display = 'none';
+                document.getElementById('withdrawForm').style.display = 'block';
+            }
+        };
+        const renderInvestments = () => {
+            if (!currentUser) return;
+            const list = document.getElementById('myInvestmentList');
+            const invs = currentUser.investments || [];
+            if (invs.length === 0) { list.innerHTML = `<div class="empty-state"><i class="fas fa-chart-line"></i><p>${t('noInvestment')}</p></div>`; return; }
+            list.innerHTML = invs.map(inv => `
+                <div class="card">
+                    <div class="flex justify-between mb-2"><h3>${inv.planName}</h3><span class="badge ${inv.status === 'Active' ? 'badge-success' : 'badge-info'}">${inv.status === 'Active' ? t('active') : t('completed')}</span></div>
+                    <div class="flex justify-between mb-2" style="font-size:14px"><span>${t('planPrice')}</span><span class="font-bold">৳${inv.amount}</span></div>
+                    <div class="flex justify-between mb-2" style="font-size:14px"><span>${t('planDaily')}</span><span class="font-bold text-primary">৳${inv.dailyReturn}</span></div>
+                    <div class="flex justify-between mb-2" style="font-size:14px"><span>${t('planTotal')}</span><span class="font-bold">৳${(inv.totalEarned || 0).toFixed(2)}</span></div>
+                    <div class="flex justify-between" style="font-size:14px"><span>${t('planDuration')}</span><span class="font-bold">${inv.remainingDays || 0} ${t('day')}</span></div>
+                </div>`).join('');
+        };
+        const renderTransactions = () => {
+            if (!currentUser) return;
+            const txns = Object.values(allTransactionsCache).filter(t => t.userId === currentUser.id);
+            const html = txns.length === 0 ? `<div class="empty-state"><i class="fas fa-file-invoice"></i><p>${t('noTxn')}</p></div>` :
+                txns.map(t => `<div class="card flex justify-between items-center"><div><div class="font-bold">${t.type}</div><div style="font-size:12px;color:var(--text-muted)">${new Date(t.date).toLocaleString()}</div></div><div class="font-bold text-primary">৳${(t.amount || 0).toFixed(2)}</div></div>`).join('');
+            document.getElementById('historyList').innerHTML = html;
+        };
+        const renderOrders = () => {
+            if (!currentUser) return;
+            const list = document.getElementById('orderList');
+            const orders = currentUser.orders || [];
+            if (orders.length === 0) { list.innerHTML = `<div class="empty-state"><i class="fas fa-clipboard-list"></i><p>${t('noOrder')}</p></div>`; return; }
+            list.innerHTML = orders.map(o => `
+                <div class="card">
+                    <div class="flex justify-between mb-2"><h3>${o.planName}</h3><span class="badge badge-success">${t('active')}</span></div>
+                    <div class="flex justify-between mb-2" style="font-size:14px"><span>${t('planPrice')}</span><span class="font-bold">৳${o.amount}</span></div>
+                    <div class="flex justify-between mb-2" style="font-size:14px"><span>Order ID:</span><span class="font-bold">${o.id}</span></div>
+                    <div class="flex justify-between" style="font-size:14px"><span>Date:</span><span>${new Date(o.date).toLocaleString()}</span></div>
+                </div>`).join('');
+        };
+        const renderTeam = () => {
+            if (!currentUser) return;
+            db.ref('users').once('value').then((snap) => {
+                const allUsers = snap.val() || {};
+                const referred = Object.values(allUsers).filter(u => u.referredBy === currentUser.inviteCode);
+                const active = referred.filter(u => u.investments && u.investments.length > 0);
+                document.getElementById('teamTotalMembers').textContent = referred.length;
+                document.getElementById('teamActiveMembers').textContent = active.length;
+                const list = document.getElementById('teamMemberList');
+                if (referred.length === 0) { list.innerHTML = `<div class="empty-state"><i class="fas fa-users"></i><p>${t('noReferral')}</p></div>`; return; }
+                list.innerHTML = referred.map(u => {
+                    const invested = (u.investments || []).reduce((s, i) => s + (i.amount || 0), 0);
+                    return `<div class="card flex justify-between items-center"><div><div class="font-bold">${u.phone}</div><div style="font-size:12px;color:var(--text-muted)">${new Date(u.joinDate).toLocaleDateString()}</div><div style="font-size:12px;color:var(--text-muted)">${t('planTotal')} ৳${invested}</div></div><span class="badge ${(u.investments || []).length > 0 ? 'badge-success' : 'badge-warning'}">${(u.investments || []).length > 0 ? t('active') : t('inactive')}</span></div>`;
+                }).join('');
+            });
+        };
+        const renderMission = () => {
+            if (!currentUser) return;
+            db.ref('users').once('value').then((snap) => {
+                const allUsers = snap.val() || {};
+                const count = Object.values(allUsers).filter(u => u.referredBy === currentUser.inviteCode && u.investments && u.investments.length > 0).length;
+                document.getElementById('missionCount').textContent = count;
+                document.getElementById('missionProgress').style.width = Math.min((count / CONFIG.referralMissionTarget) * 100, 100) + '%';
+                const btn = document.getElementById('missionClaimBtn');
+                if (count >= CONFIG.referralMissionTarget && !currentUser.lastMissionClaim) { btn.disabled = false; btn.style.opacity = '1'; }
+                else { btn.disabled = true; btn.style.opacity = '0.5'; }
+            });
+        };
+
+        // ==========================================
+        // PURCHASE
+        // ==========================================
+        const openPurchaseModal = (planId) => {
+            selectedPlan = plansCache.find(p => p.id === planId);
+            if (!selectedPlan) return;
+            document.getElementById('purchaseModalBody').innerHTML = `
+                <div class="text-center mb-4"><h3 style="color:var(--primary)">${selectedPlan.name}</h3></div>
+                <div class="flex justify-between mb-2"><span>${t('planPrice')}</span><span class="font-bold">৳${selectedPlan.price}</span></div>
+                <div class="flex justify-between mb-2"><span>${t('planDaily')}</span><span class="font-bold text-primary">৳${selectedPlan.dailyReturn}</span></div>
+                <div class="flex justify-between mb-2"><span>${t('planDuration')}</span><span class="font-bold">${selectedPlan.duration} ${t('day')}</span></div>
+                <div class="flex justify-between mb-2"><span>${t('planTotal')}</span><span class="font-bold text-primary">৳${selectedPlan.totalReturn}</span></div>
+                <hr style="border:none;border-top:1px solid var(--border);margin:12px 0">
+                <div class="flex justify-between" style="font-size:14px;color:var(--text-muted)"><span>${t('balanceLabel')}</span><span class="font-bold" style="color:var(--text)">৳${(currentUser.balance || 0).toFixed(2)}</span></div>`;
+            openModal('purchaseModal');
+        };
+        const confirmPurchase = () => {
+            if (!selectedPlan || !currentUser) return;
+            if ((currentUser.balance || 0) < selectedPlan.price) { showToast(t('insufficientBalance'), 'error'); return; }
+            showLoading(true);
+            const newBalance = (currentUser.balance || 0) - selectedPlan.price;
+            const inv = { id: 'INV' + Date.now(), planId: selectedPlan.id, planName: selectedPlan.name, amount: selectedPlan.price, dailyReturn: selectedPlan.dailyReturn, duration: selectedPlan.duration, totalReturn: selectedPlan.totalReturn, purchaseDate: new Date().toISOString(), nextEarningAt: new Date(Date.now() + 86400000).toISOString(), totalEarned: 0, remainingDays: selectedPlan.duration, status: 'Active' };
+            const order = { id: 'ORD' + Date.now(), planId: selectedPlan.id, planName: selectedPlan.name, amount: selectedPlan.price, date: new Date().toISOString(), status: 'Active' };
+            db.ref('users/' + currentUser.id).update({ balance: newBalance, investments: [...(currentUser.investments || []), inv], orders: [...(currentUser.orders || []), order] })
+                .then(() => {
+                    const txnRef = db.ref('transactions').push();
+                    txnRef.set({ id: txnRef.key, userId: currentUser.id, type: 'Investment', amount: selectedPlan.price, date: new Date().toISOString(), status: 'Completed' });
+                    if (currentUser.referredBy) {
+                        db.ref('users').orderByChild('inviteCode').equalTo(currentUser.referredBy).once('value').then((refSnap) => {
+                            const refData = refSnap.val();
+                            if (refData) {
+                                const refId = Object.keys(refData)[0];
+                                const refUser = refData[refId];
+                                const comm = (selectedPlan.price * CONFIG.commissionL1) / 100;
+                                db.ref('users/' + refId).update({ balance: (refUser.balance || 0) + comm, teamIncome: (refUser.teamIncome || 0) + comm });
+                                const cRef = db.ref('transactions').push();
+                                cRef.set({ id: cRef.key, userId: refId, type: 'Referral Commission', amount: comm, date: new Date().toISOString(), status: 'Completed' });
+                            }
+                        });
+                    }
+                    showLoading(false); closeModal('purchaseModal'); showToast(t('packageBought'), 'success');
+                }).catch(() => { showLoading(false); showToast(t('firebaseError'), 'error'); });
+        };
+
+        // ==========================================
+        // ACCOUNTS
+        // ==========================================
+        const addBankAccount = () => {
+            if (!currentUser) return;
+            const method = document.getElementById('bankMethod').value;
+            const holder = document.getElementById('bankHolderName').value;
+            const number = document.getElementById('bankAccountNumber').value;
+            if (!holder || !number) { showToast(t('enterNameNumber'), 'error'); return; }
+            showLoading(true);
+            const acc = { id: 'ACC' + Date.now(), method, holderName: holder, accountNumber: number };
+            db.ref('users/' + currentUser.id).update({ accounts: [...(currentUser.accounts || []), acc] })
+                .then(() => { showLoading(false); document.getElementById('bankHolderName').value = ''; document.getElementById('bankAccountNumber').value = ''; showToast(t('accountAdded'), 'success'); })
+                .catch(() => { showLoading(false); showToast(t('firebaseError'), 'error'); });
+        };
+        const deleteAccount = (id) => {
+            if (!confirm(t('accountDeleted') + '?')) return;
+            showLoading(true);
+            db.ref('users/' + currentUser.id).update({ accounts: (currentUser.accounts || []).filter(a => a.id !== id) })
+                .then(() => { showLoading(false); showToast(t('accountDeleted'), 'info'); })
+                .catch(() => { showLoading(false); showToast(t('firebaseError'), 'error'); });
+        };
+        const selectWithdrawAccount = (id, el) => {
+            document.querySelectorAll('input[name="withdrawAccount"]').forEach(r => r.checked = false);
+            document.querySelector(`input[name="withdrawAccount"][value="${id}"]`).checked = true;
+            document.querySelectorAll('.payment-method-option').forEach(o => o.classList.remove('active'));
+            el.classList.add('active');
+        };
+
+        // ==========================================
+        // WITHDRAW & RECHARGE (with id saved)
+        // ==========================================
+        const submitWithdraw = () => {
+            if (!currentUser) return;
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const selected = document.querySelector('input[name="withdrawAccount"]:checked');
+            if (!amount || amount <= 0) { showToast(t('enterAmount'), 'error'); return; }
+            if (!selected) { showToast(t('selectAccount'), 'error'); return; }
+            if (amount < CONFIG.minWithdraw) { showToast(t('minWithdraw'), 'error'); return; }
+            if (amount > (currentUser.balance || 0)) { showToast(t('insufficientBalance'), 'error'); return; }
+            const fee = (amount * CONFIG.withdrawFee) / 100;
+            const net = amount - fee;
+            showLoading(true);
+            db.ref('users/' + currentUser.id).update({ balance: (currentUser.balance || 0) - amount })
+                .then(() => {
+                    const txnRef = db.ref('transactions').push();
+                    txnRef.set({ id: txnRef.key, userId: currentUser.id, type: 'Withdrawal', amount: net, fee: fee, accountId: selected.value, date: new Date().toISOString(), status: 'Pending' });
+                    showLoading(false); document.getElementById('withdrawAmount').value = ''; showToast(t('withdrawSuccess'), 'success');
+                }).catch(() => { showLoading(false); showToast(t('firebaseError'), 'error'); });
+        };
+        const updateRechargeNumber = () => {
+            document.getElementById('paymentNumber').textContent = settingsCache.depositNumber || "01928321974";
+            document.getElementById('lblSendMoneyNote').textContent = settingsCache.depositNote || "শুধুমাত্র সেন্ড মানি গ্রহণ করা হয়";
+        };
+        const submitRecharge = () => {
+            if (!currentUser) return;
+            const amount = parseFloat(document.getElementById('rechargeAmount').value);
+            const method = document.getElementById('rechargeMethod').value;
+            const trxId = document.getElementById('rechargeTrxId').value;
+            if (!amount || amount <= 0) { showToast(t('enterAmount'), 'error'); return; }
+            if (amount < CONFIG.minDeposit) { showToast(t('minDeposit'), 'error'); return; }
+            if (!trxId) { showToast(t('enterTrxId'), 'error'); return; }
+            showLoading(true);
+            const txnRef = db.ref('transactions').push();
+            txnRef.set({ id: txnRef.key, userId: currentUser.id, type: 'Deposit', amount: amount, method: method, trxId: trxId, date: new Date().toISOString(), status: 'Pending' })
+                .then(() => { showLoading(false); document.getElementById('rechargeAmount').value = ''; document.getElementById('rechargeTrxId').value = ''; showToast(t('rechargeSuccess'), 'success'); })
+                .catch(() => { showLoading(false); showToast(t('firebaseError'), 'error'); });
+        };
+
+        // ==========================================
+        // REFERRAL & MISSION & BONUS
+        // ==========================================
+        const copyReferral = () => {
+            if (!currentUser) return;
+            const link = `${window.location.origin}${window.location.pathname}?ref=${currentUser.inviteCode}`;
+            navigator.clipboard.writeText(link).then(() => showToast(t('referralCopied'), 'success'));
+        };
+        const claimMissionReward = () => {
+            if (!currentUser) return;
+            if (currentUser.lastMissionClaim) { showToast(t('missionClaimed'), 'error'); return; }
+            db.ref('users').once('value').then((snap) => {
+                const all = snap.val() || {};
+                const count = Object.values(all).filter(u => u.referredBy === currentUser.inviteCode && u.investments && u.investments.length > 0).length;
+                if (count < CONFIG.referralMissionTarget) { showToast(t('missionNotDone'), 'error'); return; }
+                showLoading(true);
+                db.ref('users/' + currentUser.id).update({ balance: (currentUser.balance || 0) + CONFIG.referralMissionReward, lastMissionClaim: new Date().toISOString() })
+                    .then(() => {
+                        const txnRef = db.ref('transactions').push();
+                        txnRef.set({ id: txnRef.key, userId: currentUser.id, type: 'Mission Reward', amount: CONFIG.referralMissionReward, date: new Date().toISOString(), status: 'Completed' });
+                        showLoading(false); showToast(t('missionClaimed'), 'success');
+                    }).catch(() => { showLoading(false); showToast(t('firebaseError'), 'error'); });
+            });
+        };
+        const claimDailyBonus = () => {
+            if (!currentUser) return;
+            const now = Date.now();
+            if (currentUser.lastDailyBonusClaim) {
+                const last = new Date(currentUser.lastDailyBonusClaim).getTime();
+                if (now - last < 86400000) {
+                    const rem = 86400000 - (now - last);
+                    const h = Math.floor(rem / 3600000), m = Math.floor((rem % 3600000) / 60000);
+                    showToast(`${t('bonusWait')}: ${h}h ${m}m`, 'warning'); return;
+                }
+            }
+            showLoading(true);
+            db.ref('users/' + currentUser.id).update({
+                balance: (currentUser.balance || 0) + CONFIG.dailyBonusAmount,
+                todayIncome: (currentUser.todayIncome || 0) + CONFIG.dailyBonusAmount,
+                totalIncome: (currentUser.totalIncome || 0) + CONFIG.dailyBonusAmount,
+                lastDailyBonusClaim: new Date().toISOString()
+            }).then(() => {
+                const txnRef = db.ref('transactions').push();
+                txnRef.set({ id: txnRef.key, userId: currentUser.id, type: 'Daily Bonus', amount: CONFIG.dailyBonusAmount, date: new Date().toISOString(), status: 'Completed' });
+                showLoading(false); showToast(t('bonusClaimed'), 'success');
+            }).catch(() => { showLoading(false); showToast(t('firebaseError'), 'error'); });
+        };
+
+        // ==========================================
+        // PROFILE & PASSWORD
+        // ==========================================
+        const showEditProfileModal = () => {
+            if (!currentUser) return;
+            document.getElementById('editName').value = currentUser.name || '';
+            document.getElementById('editImage').value = currentUser.image || '';
+            openModal('editProfileModal');
+        };
+        const saveProfileEdit = () => {
+            if (!currentUser) return;
+            const name = document.getElementById('editName').value;
+            const image = document.getElementById('editImage').value;
+            if (!name) { showToast(t('enterNameNumber'), 'error'); return; }
+            showLoading(true);
+            db.ref('users/' + currentUser.id).update({ name, image }).then(() => { showLoading(false); closeModal('editProfileModal'); showToast(t('profileUpdated'), 'success'); })
+                .catch(() => { showLoading(false); showToast(t('firebaseError'), 'error'); });
+        };
+        const showChangePasswordModal = () => openModal('changePasswordModal');
+        const changePassword = () => {
+            if (!currentUser) return;
+            const oldP = document.getElementById('oldPassword').value;
+            const newP = document.getElementById('newPassword').value;
+            const conf = document.getElementById('confirmNewPassword').value;
+            if (oldP !== currentUser.password) { showToast(t('oldPassWrong'), 'error'); return; }
+            if (newP !== conf) { showToast(t('passMismatch'), 'error'); return; }
+            if (!newP) { showToast(t('enterAmount'), 'error'); return; }
+            showLoading(true);
+            db.ref('users/' + currentUser.id).update({ password: newP }).then(() => { showLoading(false); closeModal('changePasswordModal'); showToast(t('passChanged'), 'success'); })
+                .catch(() => { showLoading(false); showToast(t('firebaseError'), 'error'); });
+        };
+
+        // ==========================================
+        // NAVIGATION & COUNTDOWN
+        // ==========================================
+        const navigateTo = (pageName, element = null) => {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById('page-' + pageName);
+            if (target) target.classList.add('active');
+            window.scrollTo(0, 0);
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            if (element) element.classList.add('active');
+            else {
+                if (pageName === 'home') document.querySelectorAll('.nav-item')[0].classList.add('active');
+                if (pageName === 'order') document.querySelectorAll('.nav-item')[1].classList.add('active');
+                if (pageName === 'team') document.querySelectorAll('.nav-item')[2].classList.add('active');
+                if (pageName === 'profile') document.querySelectorAll('.nav-item')[3].classList.add('active');
+            }
+        };
+        const startCountdown = () => {
+            if (countdownInterval) clearInterval(countdownInterval);
+            const target = settingsCache.countdownTarget ? new Date(settingsCache.countdownTarget).getTime() : Date.now() + 3 * 86400000;
+            countdownInterval = setInterval(() => {
+                const now = Date.now();
+                const d = target - now;
+                if (d < 0) { clearInterval(countdownInterval); return; }
+                document.getElementById('cdDays').textContent = String(Math.floor(d / 86400000)).padStart(2, '0');
+                document.getElementById('cdHours').textContent = String(Math.floor((d % 86400000) / 3600000)).padStart(2, '0');
+                document.getElementById('cdMinutes').textContent = String(Math.floor((d % 3600000) / 60000)).padStart(2, '0');
+                document.getElementById('cdSeconds').textContent = String(Math.floor((d % 60000) / 1000)).padStart(2, '0');
+            }, 1000);
+        };
+
+        // ==========================================
+        // INIT
+        // ==========================================
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('um_currentUser');
+            if (saved) {
+                currentUser = JSON.parse(saved);
+                showMainApp();
+            } else {
+                document.getElementById('authScreen').classList.remove('hidden');
+                document.getElementById('mainApp').classList.add('hidden');
+            }
+            applyLanguage();
+            startCountdown();
+            loadSettings(); loadBanners(); loadPlans(); loadAllTransactions();
+            if (currentUser && currentUser.id) loadUser(currentUser.id);
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCode = urlParams.get('ref');
+            if (refCode) { document.getElementById('regInviteCode').value = refCode; switchAuthTab('register'); }
+        });
+
+        // 24-hour earning simulation (for demo)
+        setInterval(() => {
+            if (!currentUser || !currentUser.investments) return;
+            let updated = false;
+            const now = Date.now();
+            const updatedInvs = currentUser.investments.map(inv => {
+                if (inv.status === 'Active' && now >= new Date(inv.nextEarningAt).getTime()) {
+                    inv.totalEarned = (inv.totalEarned || 0) + inv.dailyReturn;
+                    inv.nextEarningAt = new Date(now + 86400000).toISOString();
+                    inv.remainingDays = Math.max(0, (inv.remainingDays || 0) - 1);
+                    if (inv.remainingDays <= 0) inv.status = 'Completed';
+                    updated = true;
+                    db.ref('users/' + currentUser.id).update({
+                        balance: (currentUser.balance || 0) + inv.dailyReturn,
+                        todayIncome: (currentUser.todayIncome || 0) + inv.dailyReturn,
+                        totalIncome: (currentUser.totalIncome || 0) + inv.dailyReturn,
+                        investments: updatedInvs
+                    });
+                    const txnRef = db.ref('transactions').push();
+                    txnRef.set({ id: txnRef.key, userId: currentUser.id, type: 'Daily Income', amount: inv.dailyReturn, date: new Date().toISOString(), status: 'Completed' });
+                }
+                return inv;
+            });
+            if (updated) showToast(t('dailyIncome'), 'success');
+        }, 30000);
+    </script>
+
+    <!-- PWABuilder Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./service-worker.js')
+            .then((reg) => console.log('Service Worker registered!', reg))
+            .catch((err) => console.log('Service Worker error:', err));
+        });
+      }
+    </script>
+</body>
+</html>
